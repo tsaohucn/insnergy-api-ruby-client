@@ -17,8 +17,8 @@ Juwelier::Tasks.new do |gem|
   gem.name = "insnergy-api-ruby-client"
   gem.homepage = "http://github.com/kaogaau/insnergy-api-ruby-client"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{The ruby gem about In-Snergy Family}
+  gem.description = %Q{The ruby gem about In-Snergy Family}
   gem.email = "itri.n100.a20229@gmail.com"
   gem.authors = ["kaogaau"]
 
