@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.authors = ["kaogaau"]
   s.date = "2016-09-14"
-  s.description = "TODO: longer description of your gem"
+  s.description = "The ruby gem about In-Snergy Family"
   s.email = "itri.n100.a20229@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/kaogaau/insnergy-api-ruby-client"
   s.licenses = ["MIT"]
   s.rubygems_version = "2.5.1"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "The ruby gem about In-Snergy Family"
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
