@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "insnergy-api-ruby-client.gemspec",
     "lib/insnergy-api-ruby-client.rb"
   ]
   s.homepage = "http://github.com/kaogaau/insnergy-api-ruby-client"
