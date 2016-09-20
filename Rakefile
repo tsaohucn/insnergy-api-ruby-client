@@ -19,7 +19,7 @@ Juwelier::Tasks.new do |gem|
   gem.license = "MIT"
   gem.summary = %Q{The ruby gem about In-Snergy Family}
   gem.description = %Q{The ruby gem about In-Snergy Family}
-  gem.email = “kaogaau@gmail.com"
+  gem.email = "kaogaau@gmail.com"
   gem.authors = ["kaogaau"]
 
   # dependencies defined in Gemfile
