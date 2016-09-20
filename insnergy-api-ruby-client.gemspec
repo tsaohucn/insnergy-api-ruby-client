@@ -33,6 +33,8 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.rubygems_version = "2.5.1"
   s.summary = "The ruby gem about In-Snergy Family"
+  s.add_runtime_dependency('rest-client')
+  s.add_runtime_dependency('json', ["~> 1.8.1"])  
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
