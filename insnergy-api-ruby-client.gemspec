@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.authors = ["kaogaau"]
   s.date = "2016-09-20"
   s.description = "The ruby gem about In-Snergy Family"
-  s.email = "itri.n100.a20229@gmail.com"
+  s.email = "kaogaau@gmail.com"#"itri.n100.a20229@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
