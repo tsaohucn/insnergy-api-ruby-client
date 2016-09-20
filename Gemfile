@@ -5,6 +5,9 @@ source "https://rubygems.org"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
+gem 'rest-client'
+gem 'json', '~> 1.8.1'
+
 group :development do
   gem "shoulda", ">= 0"
   gem "rdoc", "~> 3.12"
@@ -13,9 +16,4 @@ group :development do
   gem "simplecov", ">= 0"
   gem 'rest-client'
   gem 'json', '~> 1.8.1'
-end
-
-group :product do
-  gem 'rest-client'
-  gem 'json', '~> 1.8.1'	
 end
