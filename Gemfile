@@ -14,3 +14,8 @@ group :development do
   gem 'rest-client'
   gem 'json', '~> 1.8.1'
 end
+
+group :product do
+  gem 'rest-client'
+  gem 'json', '~> 1.8.1'	
+end
