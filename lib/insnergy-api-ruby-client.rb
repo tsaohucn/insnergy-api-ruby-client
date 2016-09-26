@@ -87,7 +87,7 @@ module Insnergy
 
     def device_is_single_hole(opts)
       @type = "single hole"
-      @power_value = opts['devices'][0]['data'][0]['value'].to_f
+      @month_total_power_value = opts['devices'][0]['data'][0]['value'].to_f
       @alias = opts['devices'][0]['alias']
     end
   end
