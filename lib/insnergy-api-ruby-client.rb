@@ -39,7 +39,7 @@ module Insnergy
   end
 
   class Client::Power
-    attr_reader :access_token, :user_id, :device_type_pointer, :response
+    attr_reader :access_token, :user_id, :device_type_pointer, :response, :parameter
 
     def initialize(client: nil, device_id: nil, start_time: nil, end_time: nil)
       @access_token = client.access_token
@@ -55,8 +55,8 @@ module Insnergy
     end
 
     def get_response
-      parameter = {:params => {:apsystem => "IFA", :email => @user_id, :attr => "dm1mi", :start_time => @start_time, :end_time => @end_time, :dev_ids => @device_id}, :Authorization => "Bearer #{@access_token}"}
-      @response = JSON.parse(RestClient.get "#{@domain}/if/3/device/history_ext", parameter)
+      @parameter = {:params => {:apsystem => "IFA", :email => @user_id, :attr => "dm1mi", :start_time => @start_time, :end_time => @end_time, :dev_ids => @device_id}, :Authorization => "Bearer #{@access_token}"}
+      @response = JSON.parse(RestClient.get "#{@domain}/if/3/device/history_ext", @parameter)
       @response      
     end
   end
