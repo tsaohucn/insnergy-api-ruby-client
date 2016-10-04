@@ -1,3 +1,6 @@
+require 'json'
+require 'rest-client'
+
 module Insnergy
 
   class Client
@@ -9,58 +12,70 @@ module Insnergy
       @oauth_key = oauth_key
 	    @oauth_secert = oauth_secert
 	    @refresh_token = refresh_token
-	    @user_id = nil
-	    refresh!
+      @access_token = nil
+      @user_id = nil
+	    token!
       user_id!
 	  end
 
-	  def refresh!
+	  def token!
       response = JSON.parse(RestClient.post "#{@domain}/if/oauth/token" ,{:client_id => @oauth_key, :client_secret => @oauth_secert, :absytem => 'IFA', :grant_type => 'refresh_token', :refresh_token => @refresh_token }, :accept => :json)
-      raise "<refresh_token is nil>\n#{response}" unless response['refresh_token'] != nil
-      raise "<access_token is nil>\n#{response}" unless response['access_token'] != nil
+      raise "<no got refresh_token>\n#{response}" unless response.key?('refresh_token')
+      raise "<no got access_token>\n#{response}" unless response.key?('access_token')
       @refresh_token = response['refresh_token']
       @access_token = response['access_token']		
 	  end
 
 	  def user_id!
       response = JSON.parse(RestClient.get "#{@domain}/if/3/user/me" ,{:Authorization => "Bearer #{@access_token}"})
-      raise "<user_id is nil>\n#{response}" unless response['user']['user_id'] != nil
+      raise "<no got user_id>\n#{response}" unless response.key?('user') && response['user'].key?('user_id')
       @user_id = response['user']['user_id']
 	  end
 
-	  def sensor
-		  Client::Sensor.new(client: self, category: 'sensor')
-	  end
+	  #def sensor
+		#  Client::Sensor.new(client: self, category: 'sensor')
+	  #end
 
-    def power(device_id: nil, start_time: nil, end_time: nil)
-      client = Client::Power.new(client: self, device_id: device_id, start_time: start_time, end_time: end_time)
-      #client.get_device
-    end
+    #def power(device_id: nil, start_time: nil, end_time: nil)
+    #  client = Client::Power.new(client: self, device_id: device_id, start_time: start_time, end_time: end_time)
+    #  client.get_device
+    #end
   end
 
-  class Client::Power
-    attr_reader :access_token, :user_id, :device_type_pointer, :response, :parameter
+  class Power
+    attr_accessor :device_ids, :start_time, :end_time 
+    attr_reader :response
 
-    def initialize(client: nil, device_id: nil, start_time: nil, end_time: nil)
+    def initialize(client: nil, device_ids: [], start_time: nil, end_time: nil)
       @access_token = client.access_token
       @user_id = client.user_id
       @domain = client.domain
-      @device_id = device_id
+      @device_ids = device_ids
+      @dev_ids = ''
+      device_ids = Array(device_ids)
+      device_ids.each do |ele|
+        @dev_ids += ele
+        @dev_ids += ';'
+      end
       @start_time = start_time
       @end_time = end_time
-    end
+      @response = nil
+      response!
+    end   
 
-    def get_device
-      Power.new(@response)
-    end
+    #def get_device
+    #  Power.new(@response)
+    #end
 
-    def get_response
-      @parameter = {:params => {:apsystem => "IFA", :email => @user_id, :attr => "dm1mi", :start_time => @start_time, :end_time => @end_time, :dev_ids => @device_id}, :Authorization => "Bearer #{@access_token}"}
-      @response = JSON.parse(RestClient.get "#{@domain}/if/3/device/history_ext", @parameter)
+    def response!
+      parameter = {:params => {:apsystem => "IFA", :email => @user_id, :attr => "dm1mi", :start_time => @start_time, :end_time => @end_time, :dev_ids => @dev_ids}, :Authorization => "Bearer #{@access_token}"}
+      @response = JSON.parse(RestClient.get "#{@domain}/if/3/device/history_ext", parameter)
+      raise "#{response['err']['code']}" unless response['err']['code'] == '0' 
       @response      
     end
   end
 
+=begin
   class Power
     attr_reader :device_type_pointer, :type, :month_total_power_value, :alias
 
@@ -91,39 +106,41 @@ module Insnergy
       @alias = opts['devices'][0]['alias']
     end
   end
-
-  class Client::Sensor
-    attr_reader :access_token, :user_id, :widgets
+=end
+  class Widgets
+    attr_accessor :category, :client 
+    attr_reader :response
 
     def initialize(client: nil,category: nil)
       @access_token = client.access_token
       @user_id = client.user_id
       @domain = client.domain
       @category = category
-      get_device
+      @response = nil
+      response!
     end
 
-    def get_device
-      @widgets = Array.new
-      get_response['widgets'].each do |ele|
-          @widgets << Sensor.new(ele)
-      end 
-    end
+    #def get_device
+    #  @widgets = Array.new
+    #  get_response!['widgets'].each do |ele|
+    #      @widgets << Sensor.new(ele)
+    #  end 
+    #end
 
-    def each
-      @widgets.each do |ele|
-        yield ele
-      end
-    end
+    #def each
+    #  @widgets.each do |ele|
+    #    yield ele
+    #  end
+    #end
 
-    def get_response
+    def response!
       parameter = {:params => {:apsystem => "IFA", :email => @user_id, :type_code => 1, :dev_category => "#{@category}"}, :Authorization => "Bearer #{@access_token}"}
-      response = JSON.parse(RestClient.get "#{@domain}/if/3/user/widgets", parameter)
-      raise "err code is not zero\n#{response}" unless response['err']['code'] == '0'  
-      response
+      @response = JSON.parse(RestClient.get "#{@domain}/if/3/user/widgets", parameter)
+      raise "#{response['err']['code']}" unless response['err']['code'] == '0'  
+      @response
     end
   end
-
+=begin
   class Sensor
     attr_reader :widgets_alias, :dev_id, :dev_type_name, :status
 
@@ -154,5 +171,5 @@ module Insnergy
       "#{@infos['400100']}|#{@infos['400200']}"
     end
   end
-
+=end
 end
