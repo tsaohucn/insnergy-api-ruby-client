@@ -16,4 +16,5 @@ group :development do
   gem "simplecov", ">= 0"
   gem 'rest-client'
   gem 'json', '~> 1.8.1'
+  gem 'rspec'
 end
