@@ -8,16 +8,16 @@ RSpec.configure do |config|
 
 end
 
-describe Insnergy do
+describe Insnergy::Client do
   before(:all) do #itri-tomato.project@insnergy.com
     domain = 'https://if3.insnergy.com'
     oauth_key = 'aac61d6e-b9df-4cf6-a44e-dbba0518b339'
     oauth_secert = 'ffaa37d1-74eb-42db-a555-91aa59d4f540'
     refresh_token = '43add8e7-621d-41e9-bd14-e8153d95b3ac'
-    @insnergy = Insnergy::Client.new(domain: domain, oauth_key: oauth_key, oauth_secert: oauth_secert, refresh_token: refresh_token)  
+    @insnergy = Insnergy::Client::Token.new(domain: domain, oauth_key: oauth_key, oauth_secert: oauth_secert, refresh_token: refresh_token)  
   end
 
-  describe Insnergy::Client do
+  describe Insnergy::Client::Token do
     before(:all) do
       @access_token = @insnergy.access_token
       @user_id = @insnergy.user_id
@@ -60,9 +60,9 @@ describe Insnergy do
     end
   end
 
-  describe Insnergy::Widgets do
+  describe Insnergy::Client::Widgets do
     before(:all) do
-    	@widgets = Insnergy::Widgets.new(client: @insnergy, category: 'sensor')
+    	@widgets = Insnergy::Client::Widgets.new(client: @insnergy, category: 'sensor')
     end 
 
     describe "#initialize" do
@@ -102,7 +102,7 @@ describe Insnergy do
     end
   end
 
-  describe Insnergy::Power do
+  describe Insnergy::Client::Power do
     
     def this_month_day1
       Time.new(Time.now.year, Time.now.month, 1).to_i*1000
@@ -114,7 +114,7 @@ describe Insnergy do
 
     before(:all) do
     	device_ids = ['RS06000D6F0003BB8B88','II09000D6F0003BBAE83']	
-     	@power = Insnergy::Power.new(client: @insnergy, device_ids: device_ids, start_time: this_month_day1, end_time: next_month_day1)
+     	@power = Insnergy::Client::Power.new(client: @insnergy, device_ids: device_ids, start_time: this_month_day1, end_time: next_month_day1)
     end 
 
     describe "#initialize" do
@@ -125,5 +125,27 @@ describe Insnergy do
   	    end
   	  end
     end
+  end
+
+  describe Insnergy::Client::Control do
+    before(:all) do
+      @device_id = 'II09000D6F0003BBAE83'
+      @control = Insnergy::Client::Control.new(client: @insnergy, device_id: @device_id, action: 'on')
+    end 
+    
+    describe "#initialize" do
+      context "when initialize a new object" do
+        it "must exist response" do
+          @control_response = @control.response
+          expect(@control_response).not_to eq(nil)
+        end
+
+        it "response'structre must exist relay_status and br on" do
+          @control_response = @control.response
+          expect(@control_response['relay_status']).to eq('on')
+        end
+      end 
+    end    
+
   end
 end
