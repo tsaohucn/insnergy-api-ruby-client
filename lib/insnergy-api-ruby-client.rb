@@ -106,15 +106,17 @@ module Insnergy
   end
 
   class Widget
-    attr_reader :widget_alias, :widget_dev_id, :widget_dev_type_name, :widget_status
+    attr_reader :widget_alias, :widget_dev_id, :widget_dev_type_name, :widget_status, :@new_infos
     
     def initialize(opts = {})
       @infos = Hash.new
+      @new_infos = Hash.new
       @widget_dev_id = opts['dev_id']
       @widget_dev_type_name = opts['dev_type_name']
       @widget_alias = opts['alias']
       @widget_status = opts['status']
       opts['widget_infos'].each do |ele|
+        @new_infos[ele['info_desc']] = { id: ele['info_id'], name: ele['info_name'], value: ele['info_value']}
         @infos[ele['info_name']] = ele['info_value']
       end
     end
