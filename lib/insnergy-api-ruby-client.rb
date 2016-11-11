@@ -106,7 +106,7 @@ module Insnergy
   end
 
   class Widget
-    attr_reader :widget_alias, :widget_dev_id, :widget_dev_type_name, :widget_status, :@new_infos
+    attr_reader :widget_alias, :widget_dev_id, :widget_dev_type_name, :widget_status, :new_infos
     
     def initialize(opts = {})
       @infos = Hash.new
