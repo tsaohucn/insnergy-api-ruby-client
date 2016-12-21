@@ -13,7 +13,7 @@ describe Insnergy::Client do
     domain = 'https://if3.insnergy.com'
     oauth_key = 'aac61d6e-b9df-4cf6-a44e-dbba0518b339'
     oauth_secert = 'ffaa37d1-74eb-42db-a555-91aa59d4f540'
-    refresh_token = '43add8e7-621d-41e9-bd14-e8153d95b3ac'
+    refresh_token = 'a8f1cea8-ff8e-4e88-b280-551eafe894a7'
     @insnergy = Insnergy::Client::Token.new(domain: domain, oauth_key: oauth_key, oauth_secert: oauth_secert, refresh_token: refresh_token)  
   end
 
@@ -21,18 +21,33 @@ describe Insnergy::Client do
     before(:all) do
       @access_token = @insnergy.access_token
       @user_id = @insnergy.user_id
+      @expires_at = @insnergy.expires_at
     end 
 
     describe "#initialize" do
     	context "when initialize a new object" do
   	    it "must exist access_token" do
   	      expect(@access_token).not_to eq(nil)
+          p @access_token
   	    end
 
   	    it "must exist user_id" do
   	  	  expect(@user_id).not_to eq(nil)
+          p @user_id
   	    end
+
+        it "must exist expires_at" do
+          expect(@expires_at).not_to eq(nil)
+          p @expires_at
+        end        
   	  end
+    end
+
+    describe "#ok?" do
+      it 'return true' do
+        expect(@insnergy.ok?).to eq(true)
+        p @insnergy.ok?
+      end
     end
 
     describe "#token!" do
@@ -105,11 +120,11 @@ describe Insnergy::Client do
   describe Insnergy::Client::Power do
     
     def this_month_day1
-      Time.new(Time.now.year, Time.now.month, 1).to_i*1000
+      Time.new(2016,01,01).to_i*1000
     end
 
     def next_month_day1
-      Time.new(Time.now.year, Time.now.month + 1, 1).to_i*1000
+      Time.new(2016,02,01).to_i*1000
     end  
 
     before(:all) do

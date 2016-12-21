@@ -3,9 +3,10 @@ require 'rest-client'
 
 module Insnergy
   module Client
+
     class Token
       attr_accessor :domain, :oauth_key, :oauth_secert, :refresh_token
-  	  attr_reader :access_token, :user_id
+  	  attr_reader :access_token, :user_id, :expires_at
 
   	  def initialize(domain: nil, oauth_key: nil, oauth_secert: nil, refresh_token: nil)
   	    @domain = domain
@@ -30,7 +31,22 @@ module Insnergy
         response = JSON.parse(RestClient.get "#{@domain}/if/3/user/me" ,{:Authorization => "Bearer #{@access_token}"})
         raise "<no got user_id>\n#{response}" unless response.key?('user') && response['user'].key?('user_id')
         @user_id = response['user']['user_id']
+        @expires_at = Time.at(response['token']['expires_at']/1000)
   	  end
+
+      def ok?
+        begin
+          JSON.parse(RestClient.get "#{@domain}/if/3/user/me" ,{:Authorization => "Bearer #{@access_token}"})
+          return true
+        rescue Exception => e
+          if %w(401\ Unauthorized 7104).include? e.message
+            return false
+          else
+            raise e
+          end
+        end
+      end
+      
     end
 
     class Power
