@@ -138,7 +138,7 @@ module Insnergy
     end
 
     def widget_info_value
-      self.send(:"#{@widget_dev_type_name}")
+      self.send(:"#{@widget_dev_type_name.downcase}")
     end
 
     def co_meter
