@@ -149,7 +149,7 @@ module Insnergy
       @infos['400600']
     end
 
-    def sensor_th_ty
+    def sensor_th_hy
       "#{@infos['400100']}|#{@infos['400200']}"
     end      
   end
