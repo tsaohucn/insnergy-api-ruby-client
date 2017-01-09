@@ -138,7 +138,7 @@ module Insnergy
     end
 
     def widget_info_value
-      @widget_dev_type_name
+      self."#{@widget_dev_type_name}"
     end
 
     def co_meter
