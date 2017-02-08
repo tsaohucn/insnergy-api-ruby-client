@@ -21,7 +21,7 @@ Or install it yourself as:
 ## Usage
 You can get the insnergy client by this way
 
-```ryby
+```ruby
 client = Insnergy::Client::Token.new(domain: domain, oauth_key: oauth_key, oauth_secert: oauth_secret, refresh_token: refresh_token) 
 ```
 
