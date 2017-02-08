@@ -2,6 +2,8 @@
 
 A ruby wrapper for the insnergy API <https://www.insnergy.com/>
 
+[![Build Status](https://travis-ci.org/tsaohucn/insnergy-api-ruby-client.svg?branch=master)](https://travis-ci.org/tsaohucn/insnergy-api-ruby-client)
+
 ## Installation
 
 Add this line to your application's Gemfile:

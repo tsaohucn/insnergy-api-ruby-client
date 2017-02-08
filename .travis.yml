@@ -1,0 +1,6 @@
+sudo: required
+
+language: ruby
+
+script:
+  - bundle exec rspec spec/insnergy-api-ruby-client_spec.rb
