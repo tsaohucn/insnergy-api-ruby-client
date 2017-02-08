@@ -1,6 +1,6 @@
-# insnergy-api-ruby-client
+# Insnergy 智慧綠能聯網共通平台
 
-This is about insnergy API <https://www.insnergy.com/> by ruby interface
+A ruby wrapper for the insnergy API <https://www.insnergy.com/>
 
 ## Installation
 
