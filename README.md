@@ -31,7 +31,7 @@ Then you can get `access_token`, `expires_at`
 client.access_token #=>34092c6d-7548-4c7f-9ede-12a845c4b97
 client.expires_at #=> '2017-01-01 10:00:00'
 ```
-You can now use the client that's unexpired to do something like `control device` `get widgets infomation` `get power compution`
+Now, you can use the client that's unexpired to do something like `control device` `get widgets infomation` `get power compution`
 
 ```ruby
 Insnergy::Client::Control.new(client: unexpired_client, device_id: 'RS06000D6F0003BB8B88', action: 'on')
