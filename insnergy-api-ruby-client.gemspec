@@ -10,7 +10,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
-  s.authors = ["kaogaau"]
+  s.authors = ["Tsao","jddd5456"]
+  s.owner = ["Tsao","jddd5456"]
   s.date = "2017-01-09"
   s.description = "The ruby gem about In-Snergy Family"
   s.email = "kaogaau@gmail.com"
