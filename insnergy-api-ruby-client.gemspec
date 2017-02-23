@@ -10,10 +10,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
-  s.authors = ["kaogaau".freeze]
+  s.authors = ["Tsao","jddd5456"]
+  s.owner = ["Tsao","jddd5456"]
   s.date = "2017-02-23"
   s.description = "The ruby gem about In-Snergy Family".freeze
-  s.email = "kaogaau@gmail.com".freeze
+  s.email = "tsaohucn@gmail.com".freeze
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
