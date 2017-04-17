@@ -2,14 +2,16 @@ require 'json'
 require 'rest-client'
 
 module Insnergy
+
   module Client
 
     class Token
+
       attr_accessor :domain, :oauth_key, :oauth_secert, :refresh_token
   	  attr_reader :access_token, :user_id, :expires_at
 
   	  def initialize(domain: nil, oauth_key: nil, oauth_secert: nil, refresh_token: nil)
-  	    @domain = domain
+        @domain = domain
         @oauth_key = oauth_key
   	    @oauth_secert = oauth_secert
   	    @refresh_token = refresh_token
@@ -50,6 +52,7 @@ module Insnergy
     end
 
     class Power
+
       attr_accessor :device_ids, :start_time, :end_time 
       attr_reader :response
 
@@ -76,9 +79,11 @@ module Insnergy
         raise "#{response['err']['code']}" unless response['err']['code'] == '0' 
         @response      
       end
+
     end
 
     class Widgets
+
       attr_accessor :category, :client 
       attr_reader :response
 
@@ -97,9 +102,11 @@ module Insnergy
         raise "#{response['err']['code']}" unless response['err']['code'] == '0'  
         @response
       end
+      
     end
 
     class Control
+
       attr_accessor :device_id, :action
       attr_reader :response
       def initialize(client: nil, device_id: nil, action: nil)
@@ -122,6 +129,7 @@ module Insnergy
   end
 
   class Widget
+
     attr_reader :widget_alias, :widget_dev_id, :widget_dev_type_name, :widget_status, :new_infos
     
     def initialize(opts = {})
@@ -151,39 +159,8 @@ module Insnergy
 
     def sensor_th_hy
       "#{@infos['400100']}|#{@infos['400200']}"
-    end      
+    end
+
   end
+
 end
-
-=begin
-  class Power
-    attr_reader :device_type_pointer, :type, :month_total_power_value, :alias
-
-    def initialize(opts = {})
-      @device_type_pointer = opts['devices'][0].keys.include? 'sub_dev_id'
-      case device_type_pointer
-      when true
-        device_is_multiple_hole(opts)
-      when false
-        device_is_single_hole(opts)
-      end
-    end
-
-    def device_is_multiple_hole(opts)
-      @type = "multiple hole"
-      holes = opts['devices'][0]['data'][0]['value'].split(';')
-      names = opts['devices'][0]['sub_alias'].to_s.split(';') 
-      for i in 1..holes.size 
-        self.class.send(:attr_reader, "hole_#{i}_power_value", "hole_#{i}_alias")  
-        instance_variable_set("@hole_#{i}_power_value", holes[i - 1].to_f)
-        instance_variable_set("@hole_#{i}_alias", names[i - 1].split('|')[1].split(':')[1])  
-      end
-    end
-
-    def device_is_single_hole(opts)
-      @type = "single hole"
-      @month_total_power_value = opts['devices'][0]['data'][0]['value'].to_f
-      @alias = opts['devices'][0]['alias']
-    end
-  end
-=end
